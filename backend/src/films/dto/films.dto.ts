@@ -5,7 +5,7 @@ export interface IFilm {
   tags: string[];
   title: string;
   about: string;
-  description?: string;
+  description: string;
   image: string;
   cover: string;
 }
