@@ -10,12 +10,14 @@ export const configProvider = {
     database: {
       driver: applicationConfig.DATABASE_DRIVER,
       url: applicationConfig.DATABASE_URL
-    }
+    },
+    port: Number(applicationConfig.PORT) || 3000
   }
 };
 
 export interface AppConfig {
   database: AppConfigDatabase;
+  port: number;
 }
 
 export interface AppConfigDatabase {
