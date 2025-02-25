@@ -8,8 +8,8 @@ export const configProvider = {
   provide: 'CONFIG',
   useValue: <AppConfig>{
     database: {
-      driver: applicationConfig.DATABASE_DRIVER,
-      url: applicationConfig.DATABASE_URL
+      driver: applicationConfig.DATABASE_DRIVER || 'mongodb',
+      url: applicationConfig.DATABASE_URL || 'mongodb://127.0.0.1:27017/films'
     },
     port: Number(applicationConfig.PORT) || 3000
   }
