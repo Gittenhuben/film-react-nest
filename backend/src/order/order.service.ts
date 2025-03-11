@@ -1,12 +1,12 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 
-import { FilmsMongoDbRepository } from '../repository/films.repository';
+import { FilmsRepository } from '../repository/films.repository';
 import { OrderDto, TakenDto, OrderResponseDto, ISeatsToTakeOnSession } from './dto/order.dto';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly filmsRepository: FilmsMongoDbRepository) {}
+  constructor(private readonly filmsRepository: FilmsRepository) {}
 
   async processOrder(orderDto: OrderDto): Promise<OrderResponseDto> {
     const takenDto: TakenDto = await this.filmsRepository.findTakenBySessionIds(

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import { FilmsMongoDbRepository } from '../repository/films.repository';
+import { FilmsRepository } from '../repository/films.repository';
 import { FilmsResponseDto, ScheduleResponseDto, ISession } from '../films/dto/films.dto';
 
 @Injectable()
 export class FilmsService {
-  constructor(private readonly filmsRepository: FilmsMongoDbRepository) {}
+  constructor(private readonly filmsRepository: FilmsRepository) {}
 
   async getAll(): Promise<FilmsResponseDto> {
     const filmsDatabaseDto = await this.filmsRepository.findAllFilms();
@@ -15,8 +15,8 @@ export class FilmsService {
     };
   }
 
-  async getScheduleByFilmId(id: string): Promise<ScheduleResponseDto> {
-    const sessionDatabaseDto = await this.filmsRepository.findScheduleByFilmId(id);
+  async getSchedulesByFilmId(id: string): Promise<ScheduleResponseDto> {
+    const sessionDatabaseDto = await this.filmsRepository.findSchedulesByFilmId(id);
 
     return {
       items: sessionDatabaseDto.schedule.map(session => {

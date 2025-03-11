@@ -4,32 +4,21 @@ import { ConfigModule } from '@nestjs/config';
 import * as path from 'node:path';
 
 import { configProvider } from './app.config.provider';
-import { FilmsController } from './films/films.controller';
-import { OrderController } from './order/order.controller';
-import { FilmsService } from './films/films.service';
-import { OrderService } from './order/order.service';
-import { FilmsMongoDbRepository, DatabaseConnection } from './repository/films.repository';
+import { PostgresModule } from './modules/postgres.module';
+import { MongoModule } from './modules/mongo.module';
+
+const POSTGRES_DRIVER_NAME = 'postgres';
+const MONGODB_DRIVER_NAME = 'mongodb';
+class Mock {}
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      cache: true
-    }),
+    ConfigModule,
     ServeStaticModule.forRoot({
       rootPath: path.join(__dirname, '..', 'public')
-    })
-  ],
-  controllers: [FilmsController, OrderController],
-  providers: [
-    configProvider,
-    FilmsService,
-    OrderService,
-    {
-      provide: FilmsMongoDbRepository,
-      useClass: FilmsMongoDbRepository
-    },
-    DatabaseConnection
+    }),
+    configProvider.useValue.database.driver === MONGODB_DRIVER_NAME ? MongoModule : Mock,
+    configProvider.useValue.database.driver === POSTGRES_DRIVER_NAME ? PostgresModule : Mock
   ]
 })
 export class AppModule {}

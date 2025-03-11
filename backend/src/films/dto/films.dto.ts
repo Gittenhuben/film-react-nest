@@ -2,7 +2,7 @@ export interface IFilm {
   id: string;
   rating: number;
   director: string;
-  tags: string[];
+  tags: string[] | string;
   title: string;
   about: string;
   description: string;
@@ -30,7 +30,7 @@ export interface ISession {
   rows: number;
   seats: number;
   price: number;
-  taken: string[];
+  taken: string[] | string;
 }
 
 export interface ISessionDatabase extends Omit<ISession, 'hall'> {
