@@ -6,7 +6,6 @@ import { FilmsController } from '../films/films.controller';
 import { OrderController } from '../order/order.controller';
 import { FilmsService } from '../films/films.service';
 import { OrderService } from '../order/order.service';
-import { FilmsRepository } from '../repository/films.repository';
 import { FilmsRepositoryPostgres } from '../repository/films.repository.postgres';
 import { FilmEntity } from '../repository/entities/film.entity';
 import { ScheduleEntity } from '../repository/entities/schedule.entity';
@@ -30,7 +29,7 @@ import { ScheduleEntity } from '../repository/entities/schedule.entity';
     FilmsService,
     OrderService,
     {
-      provide: FilmsRepository,
+      provide: 'REPOSITORY',
       useClass: FilmsRepositoryPostgres
     }
   ]

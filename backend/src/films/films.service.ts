@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 
 import { FilmsRepository } from '../repository/films.repository';
 import { FilmsResponseDto, ScheduleResponseDto, ISession } from '../films/dto/films.dto';
 
 @Injectable()
 export class FilmsService {
-  constructor(private readonly filmsRepository: FilmsRepository) {}
+  constructor(@Inject('REPOSITORY') private readonly filmsRepository: FilmsRepository) {}
 
   async getAll(): Promise<FilmsResponseDto> {
     const filmsDatabaseDto = await this.filmsRepository.findAllFilms();

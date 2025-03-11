@@ -1,4 +1,4 @@
-import { Injectable, Optional } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository, In } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -11,8 +11,8 @@ import { ScheduleEntity } from './entities/schedule.entity';
 @Injectable()
 export class FilmsRepositoryPostgres implements FilmsRepository {
   constructor(
-    @Optional() @InjectRepository(FilmEntity) private readonly filmRepository: Repository<FilmEntity>,
-    @Optional() @InjectRepository(ScheduleEntity) private readonly scheduleRepository: Repository<ScheduleEntity>
+    @InjectRepository(FilmEntity) private readonly filmRepository: Repository<FilmEntity>,
+    @InjectRepository(ScheduleEntity) private readonly scheduleRepository: Repository<ScheduleEntity>
   ) {
     console.log('DBMS: Postgres');
   }
