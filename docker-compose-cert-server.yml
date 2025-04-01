@@ -1,8 +1,17 @@
 services:
+  films-certbot:
+    container_name: films-certbot
+    image: ghcr.io/gittenhuben/films-certbot
+    env_file: ./certbot/.env
+    volumes:
+      - ./nginx:/etc/nginx
+      - ./certbot/generate-certificate.sh:/certbot/generate-certificate.sh
+    expose:
+      - 80
+
   films-frontend:
     container_name: films-frontend
     image: ghcr.io/gittenhuben/films-frontend
-    build: ./frontend
     restart: "no"
     volumes: 
       - ./frontend-dist:/app/frontend-dist
@@ -27,7 +36,6 @@ services:
   films-backend:
     container_name: films-backend
     image: ghcr.io/gittenhuben/films-backend
-    build: ./backend
     restart: "no"
     env_file: ./backend/.env
     expose:
