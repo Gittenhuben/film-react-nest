@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  USERNAME: ${{ github.actor }}
+  USERNAME: ${{ toLower(github.actor) }}
   TOKEN: ${{ secrets.GITHUB_TOKEN }}
   IMAGE_PREFIX: films
 
