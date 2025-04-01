@@ -23,6 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-.env1
+.env?
 .idea
 .vscode

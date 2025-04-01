@@ -5,7 +5,7 @@ bin
 dist
 frontend-dist
 
-.env1
+.env?
 .env.example
 .gitignore
 .eslintrc.cjs

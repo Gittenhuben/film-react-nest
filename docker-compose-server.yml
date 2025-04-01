@@ -2,7 +2,6 @@ services:
   films-frontend:
     container_name: films-frontend
     image: ghcr.io/gittenhuben/films-frontend
-    build: ./frontend
     restart: "no"
     volumes: 
       - ./frontend-dist:/app/frontend-dist
@@ -27,7 +26,6 @@ services:
   films-backend:
     container_name: films-backend
     image: ghcr.io/gittenhuben/films-backend
-    build: ./backend
     restart: "no"
     env_file: ./backend/.env
     expose:
