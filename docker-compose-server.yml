@@ -18,7 +18,7 @@ services:
       - ./nginx/key.pem:/etc/key.pem
     ports:
       - "80:80"
-      - "127.0.0.1:8080:8080"
+      - "8080:8080"
       - "443:443"
     environment:
       - NGINX_ENTRYPOINT_QUIET_LOGS=1
