@@ -29,6 +29,12 @@ jobs:
       id-token: write
 
     steps:
+    - name: Lowercase conversion
+      id: lowercase
+      uses: ASzc/change-string-case-action@v6
+      with:
+        string: ${{ env.USERNAME }}
+    
     - name: Checkout repository
       uses: actions/checkout@v4
 
@@ -46,5 +52,5 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         context: ${{ matrix.image }}
-        tags: ${{ env.REGISTRY }}/${{ env.USERNAME }}/${{ env.IMAGE_PREFIX }}-${{ matrix.image }}
+        tags: ${{ env.REGISTRY }}/${{ steps.lowercase.outputs.lowercase }}/${{ env.IMAGE_PREFIX }}-${{ matrix.image }}
         push: true
