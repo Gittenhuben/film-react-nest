@@ -16,13 +16,18 @@ export const configProvider = {
       port: appConfig.DATABASE_URL ? Number(new URL(appConfig.DATABASE_URL).port) || 5432 : 5432,
       database: appConfig.DATABASE_URL ? new URL(appConfig.DATABASE_URL).pathname.slice(1) || 'prac' : 'prac'
     },
-    port: Number(appConfig.PORT) || 3000
+    port: Number(appConfig.PORT) || 3000,
+    log: {
+      logType: appConfig.LOG_TYPE || 'DevLogger',
+      logLevels: appConfig.LOG_LEVELS ? appConfig.LOG_LEVELS.split(/,\s*/) || ['warn'] : ['warn']
+    }
   }
 };
 
 export interface AppConfig {
   database: AppConfigDatabase;
   port: number;
+  log: AppConfigLog;
 }
 
 export interface AppConfigDatabase {
@@ -33,4 +38,9 @@ export interface AppConfigDatabase {
   host: string;
   port: number;
   database: string;
+}
+
+export interface AppConfigLog {
+  logType: string;
+  logLevels: string[];
 }

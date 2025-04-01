@@ -1,0 +1,49 @@
+services:
+  films-frontend:
+    container_name: films-frontend
+    image: ghcr.io/gittenhuben/films-frontend
+    build: ./frontend
+    restart: "no"
+    volumes: 
+      - ./frontend-dist:/app/frontend-dist
+
+  films-nginx:
+    container_name: films-nginx
+    image: ghcr.io/gittenhuben/films-nginx
+    build: ./nginx
+    restart: "no"
+    volumes:
+      - ./frontend-dist:/app/frontend-dist
+    ports:
+      - "127.0.0.1:80:80"
+      - "127.0.0.1:8080:8080"
+    environment:
+      - NGINX_ENTRYPOINT_QUIET_LOGS=1
+
+  films-backend:
+    container_name: films-backend
+    image: ghcr.io/gittenhuben/films-backend
+    build: ./backend
+    restart: "no"
+    env_file: ./backend/.env
+    expose:
+      - 3000
+
+  films-postgres:
+    container_name: films-postgres
+    image: postgres:16
+    restart: "no"
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
+    expose:
+      - 5432
+
+  films-pgadmin:
+    container_name: films-pgadmin
+    image: dpage/pgadmin4
+    restart: "no"
+    env_file: ./database/.env
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
+    expose:
+      - 80
