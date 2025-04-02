@@ -1,0 +1,15 @@
+node_modules
+.storybook
+.template
+bin
+dist
+frontend-dist
+
+.env?
+.env.example
+.gitignore
+.eslintrc.cjs
+README.md
+
+Dockerfile
+docker-compose.yml

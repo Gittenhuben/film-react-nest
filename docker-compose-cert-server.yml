@@ -1,0 +1,61 @@
+services:
+  films-certbot:
+    container_name: films-certbot
+    image: ghcr.io/gittenhuben/films-certbot
+    env_file: ./certbot/.env
+    volumes:
+      - ./nginx:/etc/nginx
+      - ./certbot/generate-certificate.sh:/certbot/generate-certificate.sh
+    expose:
+      - 80
+
+  films-frontend:
+    container_name: films-frontend
+    image: ghcr.io/gittenhuben/films-frontend
+    restart: "no"
+    volumes: 
+      - ./frontend-dist:/app/frontend-dist
+
+  films-nginx:
+    container_name: films-nginx
+    image: nginx
+    restart: "no"
+    volumes:
+      - ./frontend-dist:/app/frontend-dist:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/server.conf:/etc/nginx/conf.d/server.conf:ro
+      - ./nginx/cert.pem:/etc/cert.pem
+      - ./nginx/key.pem:/etc/key.pem
+    ports:
+      - "80:80"
+      - "127.0.0.1:8080:8080"
+      - "443:443"
+    environment:
+      - NGINX_ENTRYPOINT_QUIET_LOGS=1
+
+  films-backend:
+    container_name: films-backend
+    image: ghcr.io/gittenhuben/films-backend
+    restart: "no"
+    env_file: ./backend/.env
+    expose:
+      - 3000
+
+  films-postgres:
+    container_name: films-postgres
+    image: postgres:16
+    restart: "no"
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
+    expose:
+      - 5432
+
+  films-pgadmin:
+    container_name: films-pgadmin
+    image: dpage/pgadmin4
+    restart: "no"
+    env_file: ./pgadmin/.env
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
+    expose:
+      - 80

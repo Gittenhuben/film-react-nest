@@ -1,0 +1,10 @@
+services:
+  films-certbot:
+    container_name: films-certbot
+    image: ghcr.io/gittenhuben/films-certbot
+    env_file: ./certbot/.env
+    build: ./certbot
+    volumes:
+      - ./nginx:/etc/nginx
+    expose:
+      - 80
