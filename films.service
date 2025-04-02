@@ -1,0 +1,11 @@
+[Unit]
+Description=Films Docker Compose
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/docker-compose -f /home/gittenhuben/films/docker-compose.yml up
+ExecStop=/usr/bin/docker-compose -f /home/gittenhuben/films/docker-compose.yml down
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

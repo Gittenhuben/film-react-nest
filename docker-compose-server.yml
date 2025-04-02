@@ -9,7 +9,7 @@ services:
   films-nginx:
     container_name: films-nginx
     image: nginx
-    restart: "no"
+    restart: on-failure
     volumes:
       - ./frontend-dist:/app/frontend-dist:ro
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
@@ -26,7 +26,7 @@ services:
   films-backend:
     container_name: films-backend
     image: ghcr.io/gittenhuben/films-backend
-    restart: "no"
+    restart: on-failure
     env_file: ./backend/.env
     expose:
       - 3000
@@ -34,7 +34,7 @@ services:
   films-postgres:
     container_name: films-postgres
     image: postgres:16
-    restart: "no"
+    restart: on-failure
     volumes:
       - ./database/data:/var/lib/postgresql/data
     expose:
@@ -43,7 +43,7 @@ services:
   films-pgadmin:
     container_name: films-pgadmin
     image: dpage/pgadmin4
-    restart: "no"
+    restart: on-failure
     env_file: ./pgadmin/.env
     volumes:
       - ./database/data:/var/lib/postgresql/data

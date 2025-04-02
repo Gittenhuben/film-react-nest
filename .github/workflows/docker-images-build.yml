@@ -68,8 +68,8 @@ jobs:
     - name: Connect via SSH and update containers
       run: |
         ssh -o StrictHostKeyChecking=false -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP }} <<EOF
-          cd ~/test
-          touch ~/test/ttt1.txt
+          /usr/bin/docker-compose -f /home/gittenhuben/films/docker-compose.yml pull
+          sudo systemctl restart films.service 
         EOF
 
     - name: Delete SSH key temp file
