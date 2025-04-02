@@ -1,4 +1,4 @@
-name: Docker Images Build and Push
+name: Docker Images: Build, Publish, Deploy
 
 on:
   push:
@@ -18,8 +18,7 @@ jobs:
     strategy:
       matrix:
        include:
-         - image: frontend
-         - image: backend
+         - image: [ frontend, backend ]
 
     permissions:
       contents: read
@@ -53,3 +52,24 @@ jobs:
         context: ${{ matrix.image }}
         tags: ${{ env.REGISTRY }}/${{ steps.lowercase.outputs.lowercase }}/${{ env.IMAGE_PREFIX }}-${{ matrix.image }}
         push: true
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up SSH key
+      run: |
+        touch ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        echo "${{ secrets.SSH }}" > ~/.ssh/id_rsa
+
+    - name: Connect via SSH and update containers
+      run: |
+        ssh -o StrictHostKeyChecking=false -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP }} <<EOF
+          cd ~/test
+          touch ~/test/ttt1.txt
+        EOF
+
+    - name: Delete SSH key temp file
+      if: always()
+      run: rm ~/.ssh/id_rsa
