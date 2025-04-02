@@ -18,7 +18,8 @@ jobs:
     strategy:
       matrix:
        include:
-         - image: [ frontend, backend ]
+         - image: frontend
+         - image: backend
 
     permissions:
       contents: read
