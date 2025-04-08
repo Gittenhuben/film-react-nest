@@ -1,9 +1,5 @@
 # FILM!
 
-## Ссылка на задеплоенный проект:
-
-https://gittenhuben.students.nomorepartiessbs.ru
-
 ## Установка
 
 ### MongoDB
